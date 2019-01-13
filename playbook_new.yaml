@@ -23,7 +23,7 @@
           aws_region: "{{ aws_region }}"
           mysql_port: "{{ mysql_port }}"
         project_path: "{{ playbook_dir }}"
-        plan_file: "{{ project_dir }}/plan.tfplan"
+        plan_file: "{{ playbook_dir }}/plan.tfplan"
         state: {{ action }}
         register: terraform_output
 
