@@ -3,7 +3,7 @@
   hosts: localhost
   connection: local
   vars:
-    project_dir: "."
+    project_dir: "{{ playbook_dir }}"
 
   tasks:
     - name: Include vars from file
