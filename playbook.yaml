@@ -12,8 +12,12 @@
 
     - name: init
       command: "terraform init {{ project_dir }}"
+      register: init_output
 
-    - name: plan
+    - debug:
+        var: init_output.stdout_lines
+
+    - name: Terraform plan
       terraform:
         variables:
           aws_access_key: "{{ aws_access_key }}"
@@ -23,8 +27,12 @@
         project_path: "{{ project_dir }}"
         plan_file: "{{ project_dir }}/plan.tfplan"
         state: planned
+        register: terraform_output
 
-    - name: apply
+    - debug:
+        var: terraform_output.stdout_lines
+
+    - name: Terraform apply
       terraform:
         variables:
           aws_access_key: "{{ aws_access_key }}"
@@ -35,3 +43,7 @@
         project_path: "{{ project_dir }}"
         plan_file: "{{ project_dir }}/plan.tfplan"
         state: present
+        register: apply_output
+
+    - debug:
+        var: apply_output.stdout_lines
