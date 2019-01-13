@@ -2,8 +2,6 @@
   name: Nodejs Mysql terraform playbook
   hosts: localhost
   connection: local
-  vars:
-    project_dir: "{{ playbook_dir }}"
 
   tasks:
     - name: Include vars from file
@@ -11,7 +9,7 @@
         file: terraform_vars.yaml
 
     - name: init
-      command: "terraform init {{ project_dir }}"
+      command: "terraform init {{ playbook_dir }}"
       register: init_output
 
     - debug:
@@ -24,7 +22,7 @@
           aws_secret_key: "{{ aws_secret_key}}"
           aws_region: "{{ aws_region }}"
           mysql_port: "{{ mysql_port }}"
-        project_path: "{{ project_dir }}"
+        project_path: "{{ playbook_dir }}"
         plan_file: "{{ project_dir }}/plan.tfplan"
         state: {{ action }}
         register: terraform_output
