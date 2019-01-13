@@ -19,8 +19,6 @@
 
     - name: plan
       terraform:
-        variables:
-          project_dir: "{{ project_dir }}"
           aws_access_key: "{{ aws_access_key }}"
           aws_secret_key: "{{ aws_secret_key}}"
           aws_region: "{{ aws_region }}"
@@ -36,7 +34,6 @@
     - name: apply
       terraform:
         variables:
-          project_dir: "{{ project_dir }}"
           aws_access_key: "{{ aws_access_key }}"
           aws_secret_key: "{{ aws_secret_key}}"
           aws_region: "{{ aws_region }}"
