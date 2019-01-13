@@ -12,10 +12,6 @@
 
     - name: init
       command: "terraform init {{ project_dir }}"
-      register: init_result
-
-    - debug:
-        var: init_result.stdout_lines
 
     - name: plan
       terraform:
@@ -27,10 +23,6 @@
         project_path: "{{ project_dir }}"
         plan_file: "{{ project_dir }}/plan.tfplan"
         state: planned
-      register: plan_result
-
-    - debug:
-        var: plan_result.stdout_lines
 
     - name: apply
       terraform:
@@ -43,7 +35,3 @@
         project_path: "{{ project_dir }}"
         plan_file: "{{ project_dir }}/plan.tfplan"
         state: present
-      register: apply_result
-
-    - debug:
-       var: apply_result.stdout_lines
