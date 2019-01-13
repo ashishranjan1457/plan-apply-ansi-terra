@@ -2,48 +2,44 @@
   name: Nodejs Mysql terraform playbook
   hosts: localhost
   connection: local
-  vars:
-    project_dir: "{{ playbook_dir }}"
 
   tasks:
-    - name: Include vars from file
+    - name: Include vars from terraform_vars file
       include_vars:
         file: terraform_vars.yaml
 
-    - name: init
-      command: "terraform init {{ project_dir }}"
-      register: init_output
+    - name: Init nodejs-mysql app
+      command: "terraform init {{ playbook_dir }}"
 
-    - debug:
-        var: init_output.stdout_lines
-
-    - name: Terraform plan
+    - name: Nodejs-mysql app
       terraform:
         variables:
           aws_access_key: "{{ aws_access_key }}"
           aws_secret_key: "{{ aws_secret_key}}"
           aws_region: "{{ aws_region }}"
+          private_key_path: "{{ private_key_path }}"
+          key_name: "{{ key_name }}"
           mysql_port: "{{ mysql_port }}"
-        project_path: "{{ project_dir }}"
+          rds_instance_type: "{{ rds_instance_type }}"
+          skip_final_snapshot: "{{ skip_final_snapshot }}"
+          apply_immediately: "{{ apply_immediately }}"
+          storage_type: "{{ storage_type }}"
+          rds_identifier: "{{ rds_identifier }}"
+          multi_az: "{{ multi_az }}"
+          snapshot_identifier: "{{ snapshot_identifier }}"
+          rds_storage: "{{ rds_storage }}"
+          publicly_accessible: "{{ publicly_accessible }}"
+          storage_encrypted: "{{ storage_encrypted }}"
+          database: "{{ database }}"
+          username: "{{ username }}"
+          password: "{{ password }}"
+          ec2_instance_ami_id: "{{ ec2_instance_ami_id }}"
+          ec2_instance_type: "{{ ec2_instance_type }}"
+          ec2_user: "{{ ec2_user }}"
+        project_path: "{{ playbook_dir }}"
         plan_file: "{{ project_dir }}/plan.tfplan"
-        state: planned
+        state: "{{ input_state }}"
       register: terraform_output
 
     - debug:
         var: terraform_output.stdout_lines
-
-    - name: Terraform apply
-      terraform:
-        variables:
-          aws_access_key: "{{ aws_access_key }}"
-          aws_secret_key: "{{ aws_secret_key}}"
-          aws_region: "{{ aws_region }}"
-          mysql_port: "{{ mysql_port }}"
-        project_path: "{{ project_dir }}"
-        project_path: "{{ project_dir }}"
-        plan_file: "{{ project_dir }}/plan.tfplan"
-        state: present
-      register: apply_output
-
-    - debug:
-        var: apply_output.stdout_lines
