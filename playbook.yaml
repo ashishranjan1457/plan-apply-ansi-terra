@@ -27,7 +27,7 @@
         project_path: "{{ project_dir }}"
         plan_file: "{{ project_dir }}/plan.tfplan"
         state: planned
-        register: terraform_output
+      register: terraform_output
 
     - debug:
         var: terraform_output.stdout_lines
@@ -43,7 +43,7 @@
         project_path: "{{ project_dir }}"
         plan_file: "{{ project_dir }}/plan.tfplan"
         state: present
-        register: apply_output
+      register: apply_output
 
     - debug:
         var: apply_output.stdout_lines
