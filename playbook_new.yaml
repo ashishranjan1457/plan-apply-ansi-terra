@@ -24,7 +24,7 @@
           mysql_port: "{{ mysql_port }}"
         project_path: "{{ playbook_dir }}"
         plan_file: "{{ playbook_dir }}/plan.tfplan"
-        state: "{{ action }}"
+        state: "{{ input_state }}"
       register: terraform_output
 
     - debug:
